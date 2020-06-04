@@ -45,13 +45,14 @@ console.log(prismVolume(3, 4, 5) === 60);
 const totalVolume = function (solids) {
   let volumesAdded = 0;
 // solids is an array of objects 
-  for (let i = 0; i < solids.length; i++) {
-    if (solids[i].type === "sphere") {
-      volumesAdded = volumesAdded + sphereVolume(solids[i].radius);
-    } else if (solids[i].type === "cone") {
-      volumesAdded = volumesAdded + coneVolume(solids[i].radius, solids[i].height);
-    } else if (solids[i].type === "prism") {
-        volumesAdded = volumesAdded + prismVolume(solids[i].heigth, solids[i].width, solids[i].depth);
+//Remember for of loops for when you don't need the iterator variable!!!!!! 
+  for (solid of solids) {
+    if (solid.type === "sphere") {
+      volumesAdded = volumesAdded + sphereVolume(solid.radius);
+    } else if (solid.type === "cone") {
+      volumesAdded = volumesAdded + coneVolume(solid.radius, solid.height);
+    } else if (solid.type === "prism") {
+        volumesAdded = volumesAdded + prismVolume(solid.heigth, solid.width, solid.depth);
       }
   }
   return volumesAdded; 
