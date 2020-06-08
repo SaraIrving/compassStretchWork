@@ -99,17 +99,17 @@ function verticalQueenThreat (generatedBoard) {
   }
 }
 
-//  FIXED BOARDER ISSUES FOR y COORD BEING 0
 // the first num of the queen is the y-coord, the second is the x-coord 
 // This function tests to see if there is a queen at a 
 // increasing y and increasing x trajectory from the 
-//blackQueen (down and right)
+// blackQueen (down and right)
+// test with : let whiteQueen = [2, 7];
+              //let blackQueen = [0, 5];
 function rightAndDownThreat (generatedBoard) {
   let numQueensPresent = 0;
   let yCoord = blackQueen[0];
   let xCoord = blackQueen[1];
-
-  while ((yCoord >= 0 && yCoord < 8) && (xCoord >= 0 && xCoord < 8)) {
+  while ((yCoord < 7) && (xCoord < 7)) {
     if (generatedBoard[yCoord + 1][xCoord + 1] === 1) {
       numQueensPresent += 1;
     }
@@ -144,12 +144,33 @@ for (let i = 0; i <= blackQueen[1]; i++) {
 
 */
 
-// FIXED BOARDER ISSUE for y coord being 0 
+
 //This function tests to see if there is a queen at a 
 //decreasing y and increasing x (right and up) trajectory 
 //from the blackQueen 
+//test with let whiteQueen = [0, 5];
+          //let blackQueen = [5, 0];
 function rightAndUpThreat (generatedBoard) {
   let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while ((yCoord >= 1) && (xCoord < 7)) {
+    if (generatedBoard[yCoord - 1][xCoord + 1] === 1) {
+      numQueensPresent += 1;
+    }
+    yCoord -= 1;
+    xCoord += 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+/* OLD CONTENT of rightAndUpThreat
+let numQueensPresent = 0;
   for ( let i = 0; i <= blackQueen[1]; i ++) {
     if(generatedBoard[blackQueen[1]] === 0) {
       if (generatedBoard[blackQueen[0]][blackQueen[1]] + i === 1) {
@@ -159,17 +180,16 @@ function rightAndUpThreat (generatedBoard) {
           numQueensPresent += 1;
         }
       }
-    /*if (generatedBoard[blackQueen[0] - i][blackQueen[1] + i] === 1) {
-      numQueensPresent += 1;
-    } */
-    }
-  }   
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
   }
+}   
+if (numQueensPresent === 2) {
+  return true;
+} else {
+  return false;
 }
+*/
+
+
 
 // FIX ??? X being 0 
 //This function tests to see if there is a queen at a 
@@ -249,11 +269,11 @@ function queenThreat(generatedBoard) {
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [2, 7];
-let blackQueen = [0, 5];
+let whiteQueen = [0, 5];
+let blackQueen = [5, 0];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(rightAndDownThreat(generatedBoard));
+console.log(rightAndUpThreat(generatedBoard));
 
 
 /*
