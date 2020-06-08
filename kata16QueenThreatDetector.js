@@ -95,6 +95,28 @@ function horizonatalRightThreat (generatedBoard) {
   }
 }
 
+//This function determines if there is another queen present
+//at decreading x coord and the same y coord as the black queen 
+// test with white queen = [0, 0]
+          // blackQueen = [0, 5]
+function horizonatalLeftThreat (generatedBoard) {
+  let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while (xCoord >= 1) {
+    if (generatedBoard[yCoord][xCoord - 1] === 1) {
+      numQueensPresent += 1;
+    }
+    xCoord -= 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 /* OLD CONTENT HORIZONTAL THREAT
 let numQueensPresent = 0;
   for (let i = 0; i < generatedBoard[blackQueen[0]].length; i++) {
@@ -334,11 +356,11 @@ function queenThreat(generatedBoard) {
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [0, 7];
-let blackQueen = [0, 2];
+let whiteQueen = [0, 0];
+let blackQueen = [0, 5];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(horizonatalRightThreat(generatedBoard));
+console.log(horizonatalLeftThreat(generatedBoard));
 
 
 /*
