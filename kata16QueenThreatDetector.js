@@ -71,6 +71,8 @@ function generateBoard (whiteQueen, blackQueen) {
 function horizontalQueenThreat (generatedBoard) {
  if (horizontalRightThreat(generatedBoard) === true || horizontalLeftThreat(generatedBoard) === true) {
    return true;
+ } else {
+   return false;
  }
 }
 
@@ -135,7 +137,37 @@ let numQueensPresent = 0;
 //in the same x coord as the Black queen at a different
 // y coord (vertical)
 function verticalQueenThreat (generatedBoard) {
+  if (verticalAboveThreat(generatedBoard) === true || verticalBelowThreat(generatedBoard) === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//This function test to see if there is a queen above the 
+//black queen in the same x coord but at decreasing y coords 
+//test with: whiteQueen = [2, 0]
+          // blackQuwwn = [7, 0]
+function verticalAboveThreat (generatedBoard) {
   let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while (yCoord >= 1) {
+    if (generatedBoard[yCoord - 1][xCoord] === 1) {
+      numQueensPresent += 1;
+    }
+    yCoord -= 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+/*  OLD CONTENT OF VERTICAL QUEEN THREAT
+let numQueensPresent = 0;
   for (let i = 0; i < generatedBoard.length; i++) {
     if (generatedBoard[i][blackQueen[1]] === 1) {
       numQueensPresent += 1;
@@ -146,7 +178,7 @@ function verticalQueenThreat (generatedBoard) {
   } else {
     return false;
   }
-}
+*/
 
 // the first num of the queen is the y-coord, the second is the x-coord 
 // This function tests to see if there is a queen at a 
@@ -356,11 +388,11 @@ function queenThreat(generatedBoard) {
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [0, 0];
-let blackQueen = [0, 5];
+let whiteQueen = [2, 0];
+let blackQueen = [7, 0];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(horizontalQueenThreat(generatedBoard));
+console.log(verticalAboveThreat(generatedBoard));
 
 
 /*
