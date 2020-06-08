@@ -235,12 +235,31 @@ let numQueensPresent = 0;
   }
 */
 
-// fixed BOARDER ISSUE FOR X BEING 0 
 //This funciton tests to see if there is a queen at a 
 //increasing y coord and decreasing x coord (left and down) 
 //trajectory from the blackQUeen 
+// test with : let whiteQueen = [5, 0];
+              //let blackQueen = [0, 5];
 function leftAndDownThreat (generatedBoard) {
   let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while (yCoord < 7 && xCoord >= 1) {
+    if (generatedBoard[yCoord + 1][xCoord - 1] === 1) {
+      numQueensPresent += 1;
+    }
+    yCoord += 1;
+    xCoord -= 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/* OLD CONTENT LEFT AND DOWN
+let numQueensPresent = 0;
   for ( let i = 0; i <= blackQueen[0]; i++) {
     if (generatedBoard[blackQueen[0]] === 0) {
       if (generatedBoard[blackQueen[0]][blackQueen[1] + i] === 1) {
@@ -257,7 +276,7 @@ function leftAndDownThreat (generatedBoard) {
   } else {
     return false;
   }
-}
+*/
 
 //This function groups together the four different functions that 
 //test for queens along diagonal trajectories
@@ -285,15 +304,14 @@ function queenThreat(generatedBoard) {
       }
 }
 
-
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [0, 1];
-let blackQueen = [5, 6];
+let whiteQueen = [5, 0];
+let blackQueen = [0, 5];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(leftAndUpThreat(generatedBoard));
+console.log(diagonalQueenThreat(generatedBoard));
 
 
 /*
