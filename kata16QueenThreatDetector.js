@@ -69,11 +69,8 @@ function generateBoard (whiteQueen, blackQueen) {
 // The same y coord at the blackQueen, at a different
 // x coord (horizontal) 
 function horizontalQueenThreat (generatedBoard) {
- if (horizontalRightThreat(generatedBoard) === true || horizontalLeftThreat(generatedBoard) === true) {
-   return true;
- } else {
-   return false;
- }
+ return (horizontalRightThreat(generatedBoard) === true ||
+         horizontalLeftThreat(generatedBoard) === true);
 }
 
 //This function determines if there is another queen present
@@ -119,29 +116,12 @@ function horizontalLeftThreat (generatedBoard) {
 }
 
 
-/* OLD CONTENT HORIZONTAL THREAT
-let numQueensPresent = 0;
-  for (let i = 0; i < generatedBoard[blackQueen[0]].length; i++) {
-    if (generatedBoard[blackQueen[0]][i] === 1) {
-      numQueensPresent += 1;
-    }
-  }
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
-  }
-*/
-
 //This function tests to see if there is a queen 
 //in the same x coord as the Black queen at a different
 // y coord (vertical)
 function verticalQueenThreat (generatedBoard) {
-  if (verticalAboveThreat(generatedBoard) === true || verticalBelowThreat(generatedBoard) === true) {
-    return true;
-  } else {
-    return false;
-  }
+  return (verticalAboveThreat(generatedBoard) === true || 
+          verticalBelowThreat(generatedBoard) === true);
 }
 
 //This function test to see if there is a queen above the 
@@ -186,21 +166,6 @@ function verticalBelowThreat (generatedBoard) {
   }
 }
 
-
-/*  OLD CONTENT OF VERTICAL QUEEN THREAT
-let numQueensPresent = 0;
-  for (let i = 0; i < generatedBoard.length; i++) {
-    if (generatedBoard[i][blackQueen[1]] === 1) {
-      numQueensPresent += 1;
-    }
-  }
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
-  }
-*/
-
 // the first num of the queen is the y-coord, the second is the x-coord 
 // This function tests to see if there is a queen at a 
 // increasing y and increasing x trajectory from the 
@@ -224,28 +189,6 @@ function rightAndDownThreat (generatedBoard) {
     return false;
   }
 }
-
-/* OLD contents rightAndDown
-let numQueensPresent = 0;
-for (let i = 0; i <= blackQueen[1]; i++) {
-    if (generatedBoard[blackQueen[1]] === 0) {
-      if (generatedBoard[blackQueen[0] + i][blackQueen[1]] === 1) {
-        numQueensPresent += 1;
-    } else {
-        if (generatedBoard[blackQueen[0] + i][blackQueen[1] + i] === 1) {
-          numQueensPresent += 1;
-        }
-      }
-    }
-  }
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
-  }
-
-*/
-
 
 //This function tests to see if there is a queen at a 
 //decreasing y and increasing x (right and up) trajectory 
@@ -271,29 +214,6 @@ function rightAndUpThreat (generatedBoard) {
 }
 
 
-/* OLD CONTENT of rightAndUpThreat
-let numQueensPresent = 0;
-  for ( let i = 0; i <= blackQueen[1]; i ++) {
-    if(generatedBoard[blackQueen[1]] === 0) {
-      if (generatedBoard[blackQueen[0]][blackQueen[1]] + i === 1) {
-        numQueensPresent += 1;
-    } else {
-        if (generatedBoard[blackQueen[0] - i][blackQueen[1] + i] === 1) {
-          numQueensPresent += 1;
-        }
-      }
-  }
-}   
-if (numQueensPresent === 2) {
-  return true;
-} else {
-  return false;
-}
-*/
-
-
-
-
 //This function tests to see if there is a queen at a 
 //decreasing x and decreasing y (left and up) trajectory from 
 //the blackQueen 
@@ -316,26 +236,6 @@ function leftAndUpThreat (generatedBoard) {
     return false;
   }
 }
-
-/*OLD CONTENT LEFT AND UP THREAT
-let numQueensPresent = 0; 
-  for (let i = 0; i <= blackQueen[0]; i++) {
-    if (generatedBoard[blackQueen[0]] === 0) {
-      if (generatedBoard[blackQueen[0] - i][blackQueen[1]] === 1) {
-        numQueensPresent += 1;
-      }
-    } else {
-        if (generatedBoard[blackQueen[0] - i][blackQueen[1] - i] === 1) {
-          numQueensPresent += 1;
-        }
-    }
-  }  
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
-  }
-*/
 
 //This funciton tests to see if there is a queen at a 
 //increasing y coord and decreasing x coord (left and down) 
@@ -360,61 +260,33 @@ function leftAndDownThreat (generatedBoard) {
   }
 }
 
-/* OLD CONTENT LEFT AND DOWN
-let numQueensPresent = 0;
-  for ( let i = 0; i <= blackQueen[0]; i++) {
-    if (generatedBoard[blackQueen[0]] === 0) {
-      if (generatedBoard[blackQueen[0]][blackQueen[1] + i] === 1) {
-        numQueensPresent += 1;
-      }
-    } else {
-        if (generatedBoard[blackQueen[0] - i][blackQueen[1] + i] === 1) {
-          numQueensPresent += 1;
-      }
-    }
-  }
-  if (numQueensPresent === 2) {
-    return true;
-  } else {
-    return false;
-  }
-*/
-
 //This function groups together the four different functions that 
 //test for queens along diagonal trajectories
 function diagonalQueenThreat (generatedBoard) {
-  if (rightAndDownThreat(generatedBoard) === true || 
-      rightAndUpThreat(generatedBoard === true) || 
-      leftAndDownThreat(generatedBoard) === true ||
-      leftAndUpThreat(generatedBoard) === true) {
-        return true;
-      } else {
-        return false;
-      }
+  return (rightAndDownThreat(generatedBoard) || 
+      rightAndUpThreat(generatedBoard) || 
+      leftAndDownThreat(generatedBoard) ||
+      leftAndUpThreat(generatedBoard));
 }
 
 //This function tests to see if there is a queen anywhere 
 //withing striking distance of the black queen, along 
 //vertical, horizonal or diagonal trajectories 
 function queenThreat(generatedBoard) {
-  if (horizontalQueenThreat(generatedBoard) === true ||
+  return (horizontalQueenThreat(generatedBoard) === true ||
       verticalQueenThreat(generatedBoard) === true ||
-      diagonalQueenThreat(generatedBoard) === true) {
-        return true;
-      } else {
-        return false;
-      }
+      diagonalQueenThreat(generatedBoard) === true);
 }
 
 //TESTS:
 
-//test down and left, should return true 
+/*
 let whiteQueen = [5, 0];
 let blackQueen = [1, 0];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(verticalBelowThreat(generatedBoard));
-
+console.log(queenThreat(generatedBoard));
+*/
 
 /*
 // tests down and left
@@ -439,14 +311,14 @@ OUTPUT:
 true
  */
 
-/*
+
 // no matches possible
 let whiteQueen = [0, 0];
 let blackQueen = [5, 7];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
 console.log(queenThreat(generatedBoard));
-*/ 
+
 /*
 Expected Output:
 [
