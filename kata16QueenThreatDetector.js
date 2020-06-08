@@ -69,7 +69,34 @@ function generateBoard (whiteQueen, blackQueen) {
 // The same y coord at the blackQueen, at a different
 // x coord (horizontal) 
 function horizontalQueenThreat (generatedBoard) {
+ if (horizonatalRightThreat === true || horizontalLeftThreat === true) {
+   return true;
+ }
+}
+
+//This function determines if there is another queen present
+//at increading x coord and the same y coord as the black queen 
+// test with white queen = [0, 7]
+          // blackQueen = [0, 2]
+function horizonatalRightThreat (generatedBoard) {
   let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while (xCoord < 7) {
+    if (generatedBoard[yCoord][xCoord + 1] === 1) {
+      numQueensPresent += 1;
+    }
+    xCoord += 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/* OLD CONTENT HORIZONTAL THREAT
+let numQueensPresent = 0;
   for (let i = 0; i < generatedBoard[blackQueen[0]].length; i++) {
     if (generatedBoard[blackQueen[0]][i] === 1) {
       numQueensPresent += 1;
@@ -80,7 +107,7 @@ function horizontalQueenThreat (generatedBoard) {
   } else {
     return false;
   }
-}
+*/
 
 //This function tests to see if there is a queen 
 //in the same x coord as the Black queen at a different
@@ -307,11 +334,11 @@ function queenThreat(generatedBoard) {
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [5, 0];
-let blackQueen = [0, 5];
+let whiteQueen = [0, 7];
+let blackQueen = [0, 2];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(diagonalQueenThreat(generatedBoard));
+console.log(horizonatalRightThreat(generatedBoard));
 
 
 /*
