@@ -165,6 +165,27 @@ function verticalAboveThreat (generatedBoard) {
   }
 }
 
+//This function test to see if there is a queen below the 
+//black queen in the same x coord but at increasing y coords 
+//test with: whiteQueen = [5, 0]
+          // blackQuwwn = [1, 0]
+function verticalBelowThreat (generatedBoard) {
+  let numQueensPresent = 0;
+  let yCoord = blackQueen[0];
+  let xCoord = blackQueen[1];
+  while (yCoord < 7) {
+    if (generatedBoard[yCoord + 1][xCoord] === 1) {
+      numQueensPresent += 1;
+    }
+    yCoord += 1;
+  }
+  if (numQueensPresent === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 /*  OLD CONTENT OF VERTICAL QUEEN THREAT
 let numQueensPresent = 0;
@@ -388,11 +409,11 @@ function queenThreat(generatedBoard) {
 //TESTS:
 
 //test down and left, should return true 
-let whiteQueen = [2, 0];
-let blackQueen = [7, 0];
+let whiteQueen = [5, 0];
+let blackQueen = [1, 0];
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.log(generatedBoard);
-console.log(verticalAboveThreat(generatedBoard));
+console.log(verticalBelowThreat(generatedBoard));
 
 
 /*
