@@ -43,6 +43,8 @@ const blocksAway = function(directions) {
   let eastwardMovement = 0;
   let northwardMovement = 0;
   let cabIsFacing = "";
+  let newDirection = "";
+  let result = {};
   if (directions[0] === "right") {
     cabIsFacing = "north";
   } else {
@@ -53,17 +55,11 @@ const blocksAway = function(directions) {
     console.log("CabIsFacing at the beginning of an iteration of the for loop: " + cabIsFacing);
     console.log("directions[i] represents: " + directions[i]);
     if (cabIsFacing = 'north') {
-      if (directions[i] === "right") {
-        // update cabIsFacing for turning North->East 
-        // update eastwardMovement by adding directions[i+1] since we're moving east
-        cabIsFacing = "east";
-        eastwardMovement += directions[i + 1];
-      } else {
-          //update cabIsFacing for turning North->West
-          //update eastwardMovemebt by subtracting directions[i+1] since we're moving west
-          cabIsFacing = "west";
-          eastwardMovement -= directions[i + 1];
-        }   
+      newDirection = determineNewDirection(cabIsFacing, directions[i]);
+      eastwardMovement = eastwardMovement + calculateEastMovement(newDirection, directions[i + 1]);
+      northwardMovement = northwardMovement + calculateNorthMovement(newDirection, directions[i + 1]);
+      cabIsFacing = newDirection;
+      
     } else if (cabIsFacing = "east") { 
         if (directions[i] === "right") {
           // update cabIsFacing for turning East->South
@@ -106,23 +102,76 @@ const blocksAway = function(directions) {
     console.log("eastwardMovement: " + eastwardMovement);
     console.log("northwardMovement: " + northwardMovement);
   }
-  let result = {};
-  result["east"] = [eastwardMovement];
-  result["north"] = [northwardMovement];
+  result["east"] = eastwardMovement;
+  result["north"] = northwardMovement;
   return result; 
 } 
 
 
+//This function takes whatever the value of cabIsFacing is at the start of the loop
+//and determines what it will be at the end of that iteration of the loop after
+//the instructions have been applied 
+function determineNewDirection (cabIsFacing, rightOrLeft) {
+  if (cabIsFacing === "north" && rightOrLeft === "right") {
+    return "east";
+  } else if (cabIsFacing === "north" && rightOrLeft === "left") {
+      return "west";
+  } else if (cabIsFacing === "east" && rightOrLeft === "right") {
+      return "south";
+  } else if (cabIsFacing === "east" && rightOrLeft === "left") {
+      return "north";
+  } else if (cabIsFacing === "south" && rightOrLeft === "right") {
+      return "west";
+  } else if (cabIsFacing === "south" && rightOrLeft === "left") {
+      return "east";
+  } else if (cabIsFacing === "west" && rightOrLeft === "right") {
+      return "north";
+  } else if (cabIsFacing === "west" && rightOrLeft === "left") {
+      return "south";
+  }
+}
+
+//This function updates the count of eastward movement of the cab
+//In this function numMoves is equal to directions[i+1]
+function calculateEastMovement (newDirection, numMoves) {
+  if (newDirection === "east") {
+    return numMoves; 
+  } else if (newDirection === "west") {
+      return numMoves * -1; 
+  } else {
+    return 0;
+  }
+}
+
+//This function updates the count of northward movement of the cab
+//In this function numMoves is equal to directions[i+1]
+function calculateNorthMovement (newDirection, numMoves) {
+  if (newDirection === "north") {
+    return numMoves; 
+  } else if (newDirection === "south") {
+      return numMoves * -1; 
+  } else {
+    return 0;
+  }
+}
 
 
 
 TESTS:
+console.log(determineNewDirection("east", "left"));
+console.log(calculateEastMovement("east", 2));
+console.log(calculateNorthMovement("south", 6));
+console.log(blocksAway(["right", 2]));
 //console.log(blocksAway(["right", 2, "left", 3, "left", 1]));
 //console.log(blocksAway(["left", 1, "right", 1, "left", 1, "right", 1, "left", 1, "right", 1]));
-console.log(blocksAway(["left", 3, "right", 1, "right", 3, "right", 1]));
+//console.log(blocksAway(["left", 3, "right", 1, "right", 3, "right", 1]));
 
 
 /* Expected Output: 
+north
+2
+-6
+{east: 2, north: 0}
 {east: 1, north: 3}
 {east: 3, north: 3}
 {east: 0, north: 0}
