@@ -17,47 +17,48 @@ print an error message and do not count this as a try.
 
 let prompt = require("prompt-sync")();
 
-// code below (replace this example)
-//let answer = prompt("Guess a number: ");
-//console.log("You answered: " + answer);
-
 //set a variable to track number of attempts
 let attempts = 0;
+
 //pick a random number between 0 and 99 
 let secretNum = Math.floor(Math.random() * 100);
 
-//get user to give the first guess 
-let answer = prompt("Guess a number between 0 and 99: ");
+//initialize the previous guess variable with NaN (so that the first
+//round where there is no previous guess this does not return an error)
+let previousGuess = NaN;
 
-//Now loop over these conditions once, if answer is not equal to secretNum then
+//get user to give the first guess 
+//convert input (which will automatically be a string) to a number 
+let answer = Number(prompt("Guess a number between 0 and 99: "));
+
+//Now loop over the conditions, if answer is not equal to secretNum then
 // SAVE ANSWER INTO PREVIOUS GUESS VARIABLE, then incorporate previous guess variable 
 //into the next loop 
-for (let i = 0; i < 1; i++) {
-  // if the input is higher than the secret number
-  if (answer > secretNum) {
-    attempts += 1;
-    console.log("Too High!");
-  }
-
-  //if the input is lower than the secret number
-  if (answer < secretNum) {
-    attempts += 1;
-    console.log("Too Low!");
-  }
-
+while(answer !== secretNum) {
   //if the input is not a number
-  if (Number.isNaN(answer) === false) {
+  if (Number.isNaN(answer)) {
     console.log("ERROR! Please enter a number between 0 and 99");
   }
+    // if the input is higher than the secret number
+    else if (answer > secretNum) {
+      attempts += 1;
+      console.log("Too High!");
+    }
+    //if the input is lower than the secret number
+    else if (answer < secretNum) {
+      attempts += 1;
+      console.log("Too Low!");
+    }
+  //save this rounds answer into the previousGuess variable to compare for the next round  
+  previousGuess = secretNum;   
 
-  //if the input matches the secret number 
-  //include the return statement with this condition!! 
-  if (answer === secretNum) {
-    attempts += 1;
-    console.log("You got it! You took " + attempts + " attempts!");
-  }
+  //prompt for another guess from the user 
+  answer = Number(prompt("Guess a number between 0 and 99: "));
 }
-//save this rounds answer into the previousGuess variable to compare for the next round 
-let previousGuess = answer; 
 
-//START LOOP NOW (consider while loop with iterator variable equal to attempts )
+//if the input matches the secret number 
+if (answer === secretNum) {
+  attempts += 1;
+  console.log("You got it! You took " + attempts + " attempts!");
+}
+
