@@ -21,10 +21,6 @@ STRATEGY:
       --Or do we not need to know the beginning direction? 
 -determine the direction the cab is facing 
     (this will impact what direction R and L move the cab)
-    -- cab starts facing east 
-    --update cab facing direction after each right or left
-      by adding or subtracting 90 degrees 
-      (North = 0, East = 90, South = 180, West = 270)
 -determine how far the cab moves 
     -- this will be related to the numerical value that follows
         the left/right direction 
@@ -52,55 +48,10 @@ const blocksAway = function(directions) {
   }
 
   for ( let i = 0; i < directions.length; i= i + 2) {
-    console.log("CabIsFacing at the beginning of an iteration of the for loop: " + cabIsFacing);
-    console.log("directions[i] represents: " + directions[i]);
-    if (cabIsFacing = 'north') {
-      newDirection = determineNewDirection(cabIsFacing, directions[i]);
-      eastwardMovement = eastwardMovement + calculateEastMovement(newDirection, directions[i + 1]);
-      northwardMovement = northwardMovement + calculateNorthMovement(newDirection, directions[i + 1]);
-      cabIsFacing = newDirection;
-      
-    } else if (cabIsFacing = "east") { 
-        if (directions[i] === "right") {
-          // update cabIsFacing for turning East->South
-          // update northwardMovement by subtracting directions[i+1] since we're moving south
-          cabIsFacing = "south";
-          northwardMovement -= directions[i + 1];
-        } else {
-            //update cabIsFacing for turning East->North
-            //update northwardMovemebt by adding directions[i+1] since we're moving north
-            cabIsFacing = "north";
-            northwardMovement += directions[i + 1];
-          }
-    } else if (cabIsFacing = "south") {
-        if (directions[i] === "right") {
-          // update cabIsFacing for turning South->West
-          // update eastwardMovement by subttracting directions[i+1] since we're moving west
-          cabIsFacing = "west";
-          eastwardMovement -= directions[i + 1];
-        } else {
-            //update cabIsFacing for turning South->East
-            //update eastwardMovement by adding directions[i+1] since we're moving east
-            cabIsFacing = "east";
-            eastwardMovement += directions[i + 1];
-          }
-    } else if (cabIsFacing = "west") {
-        if (directions[i] === "right") {
-          // update cabIsFacing for turning West->North
-          // update northwardMovement by adding directions[i+1] since we're moving north
-          cabIsFacing = "north";
-          northwardMovement += directions[i + 1];
-        } else {
-            //update cabIsFacing for turning West->South
-            //update northwardMovement by subtracting directions[i+1] since we're moving south
-            cabIsFacing = "south";
-            northwardMovement += directions[i + 1];
-          }
-
-    }
-    console.log("CabIsFacing at the end an iteration of the for loop: " + cabIsFacing);
-    console.log("eastwardMovement: " + eastwardMovement);
-    console.log("northwardMovement: " + northwardMovement);
+    newDirection = determineNewDirection(cabIsFacing, directions[i]);
+    eastwardMovement = eastwardMovement + calculateEastMovement(newDirection, directions[i + 1]);
+    northwardMovement = northwardMovement + calculateNorthMovement(newDirection, directions[i + 1]);
+    cabIsFacing = newDirection;
   }
   result["east"] = eastwardMovement;
   result["north"] = northwardMovement;
@@ -157,18 +108,20 @@ function calculateNorthMovement (newDirection, numMoves) {
 
 
 
-TESTS:
+//TESTS:
 console.log(determineNewDirection("east", "left"));
+console.log(determineNewDirection("west", "left"))
 console.log(calculateEastMovement("east", 2));
 console.log(calculateNorthMovement("south", 6));
 console.log(blocksAway(["right", 2]));
-//console.log(blocksAway(["right", 2, "left", 3, "left", 1]));
-//console.log(blocksAway(["left", 1, "right", 1, "left", 1, "right", 1, "left", 1, "right", 1]));
-//console.log(blocksAway(["left", 3, "right", 1, "right", 3, "right", 1]));
+console.log(blocksAway(["right", 2, "left", 3, "left", 1]));
+console.log(blocksAway(["left", 1, "right", 1, "left", 1, "right", 1, "left", 1, "right", 1]));
+console.log(blocksAway(["left", 3, "right", 1, "right", 3, "right", 1]));
 
 
 /* Expected Output: 
 north
+south
 2
 -6
 {east: 2, north: 0}
